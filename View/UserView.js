@@ -1,0 +1,5 @@
+class UserView{
+    constructor () {
+
+    }
+}
