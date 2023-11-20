@@ -3,3 +3,4 @@ Projet Conception agile de projets informatiques
 
 References
     - https://www.taniarascia.com/javascript-mvc-todo-app/ (MVC)
+    - JS Natif 
