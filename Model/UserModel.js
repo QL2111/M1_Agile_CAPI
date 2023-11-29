@@ -1,18 +1,25 @@
+// user.model.js
 export default class UserModel {
     constructor() {
-        this.Users = ["test"]
+        this.users = [];
     }
 
-    addUser(user) {
-        this.Users.push(user)
+    addUser(userName) {
+        const existingUser = this.users.find(user => user.name === userName);
+        if (existingUser) {
+            return false; // Người chơi đã tồn tại - Le joueur existe déjà
+        } else {
+            const newUser = { name: userName };
+            this.users.push(newUser);
+            return true; // Người chơi được thêm vào danh sách- Le joueur est ajouté à la liste
+        }
     }
 
-    getUsers() {
-        return this.Users
+    deleteUser(userName) {
+        this.users = this.users.filter(user => user.name !== userName);
     }
 
-    delUser(user) {
-        this.Users = this.Users.filter(u => u !== user)
+    getAllUsers() {
+        return this.users;
     }
 }
-
