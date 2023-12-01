@@ -15,6 +15,7 @@ export default class UserView {
         this.input.name = 'user';
         this.submitButton = this.createElement('button');
         this.submitButton.textContent = 'Submit';
+        
 
         // Tạo danh sách để hiển thị người chơi - Créer une liste pour afficher les joueurs
         this.userList = this.createElement('ul', 'user-list');
