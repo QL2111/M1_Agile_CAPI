@@ -15,6 +15,7 @@ export default class UserController {
         this.updateUserList();
     }
 
+
     addUser(userName) {
         if (!userName) {
             this.view.showAlert('veuillez saisir un joueur.');
@@ -47,4 +48,5 @@ export default class UserController {
         const users = this.model.getAllUsers();
         this.view.displayUsers(users);
     }
+    
 }

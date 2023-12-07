@@ -29,23 +29,35 @@ export default class UserView {
         this.deleteButton = this.createElement('button', 'delete');
         this.deleteButton.textContent = 'Delete Selected';
         this.app.append(this.deleteButton);
+
+        // //tạo nút chuyển tiếp
+        this.nextButton = this.createElement('button');
+        this.nextButton.type = 'button';
+        this.nextButton.textContent = 'Next';
+        this.nextButton.addEventListener('click', () => this.showCarteView());
+
+        
+
+        // Thêm nút chuyển tiếp vào ứng dụng
+        this.app.append(this.nextButton);
     }
 
+    
     // Các phương thức giao tiếp với controller - Méthodes de communication avec le contrôleur
-
+    
     onSubmit(handler) {
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             handler(this.input.value.trim());
         });
     }
-
+    
     onDeleteClick(handler) { 
         this.deleteButton.addEventListener('click', () => {
             handler();
         });
     }
-
+    
     onUserClick(handler) {
         this.userList.addEventListener('click', (event) => {
             const clickedUserItem = event.target.closest('.user-item');
@@ -54,7 +66,7 @@ export default class UserView {
     
                 // Thêm class 'clicked' khi click vào 'li'
                 clickedUserItem.classList.add('clicked');
-    
+                
                 // Lắng nghe sự kiện mouseout để xóa class 'clicked'
                 clickedUserItem.addEventListener('mouseout', () => {
                     clickedUserItem.classList.remove('clicked');
@@ -63,7 +75,18 @@ export default class UserView {
         });
     }
     // Các phương thức hiển thị - Méthodes d'affichage
-
+    
+    showCarteView() {
+        // Tạo và hiển thị trang view mới (CarteView)
+        const carteView = new CarteView();
+        carteView.show();
+      }
+      show() {
+        // Hiển thị trang view Carte
+        this.app.innerHTML = '';
+        this.app.append(this.title, this.checkboxForm, this.submitButton);
+      }
+    
     showAlert(message) {
         alert(message);
     }
@@ -108,4 +131,17 @@ export default class UserView {
     getElement(selector) {
         return document.querySelector(selector);
     }
+    // remove() {
+    //     if (this.title) {
+    //       this.title.remove();
+    //     }
+    
+    //     if (this.userList) {
+    //       this.userList.remove();
+    //     }
+    
+    //     if (this.deleteButton) {
+    //       this.deleteButton.remove();
+    //     }
+    //   }
 }
