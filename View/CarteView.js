@@ -1,7 +1,6 @@
 // import SelectDifficulty from "../Components/SelectDifficulty";
 
 import SelectDifficulty from "../Components/SelectDifficulty.js";
-import View from "./View.js";
 const CarteView = () => {
   const title = document.createElement('h1');
   title.textContent = "CARTE VIEW";
