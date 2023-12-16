@@ -1,51 +1,60 @@
+
 // user.view.js
+/**
+ * @file UserView.js
+ * @description Vue des utilisateur
+ * @module UserView
+ */
+
+/**
+ * @class UserView
+ * @classdesc UserView création des éléments html
+ */
 export default class UserView {
     constructor() {
         this.app = this.getElement('#root');
 
-        // Tạo tiêu đề ứng dụng - Créer un titre d'application
+        // Création de nos éléments
         this.title = this.createElement('h1');
         this.title.textContent = 'User Management';
 
-        // Tạo form để nhập tên người chơi - Créer un formulaire pour saisir les noms des joueurs
+        // Formulaires pour ajouter un utilisateur
         this.form = this.createElement('form');
         this.input = this.createElement('input');
         this.input.type = 'text';
         this.input.placeholder = 'Enter player name';
         this.input.name = 'user';
+        // Bouton pour envoyer le formulaire(ajout)
         this.submitButton = this.createElement('button');
         this.submitButton.textContent = 'Submit';
         
-
-        // Tạo danh sách để hiển thị người chơi - Créer une liste pour afficher les joueurs
+        // Liste
         this.userList = this.createElement('ul', 'user-list');
 
-        // Thêm input và nút submit vào trong form - Ajouter une entrée et un bouton Soumettre au formulaire
+        // Ajout de nos élement
         this.form.append(this.input, this.submitButton);
-
-        // Thêm tiêu đề, form và danh sách vào trong ứng dụng - Ajoutez des titres, des formulaires et des listes à votre application
         this.app.append(this.title, this.form, this.userList);
 
-        // Thêm nút xóa để xóa người chơi được chọn - Ajout d'un bouton Supprimer pour supprimer le joueur sélectionné
+        // Ajout d'un bouton Supprimer pour supprimer le joueur sélectionné( à garder ?)
         this.deleteButton = this.createElement('button', 'delete');
         this.deleteButton.textContent = 'Delete Selected';
         this.app.append(this.deleteButton);
 
-        // //tạo nút chuyển tiếp
+        // Button Next - passer à l'étape suivante
         this.nextButton = this.createElement('button');
         this.nextButton.type = 'button';
         this.nextButton.textContent = 'Next';
-        this.nextButton.addEventListener('click', () => this.showCarteView());
-
-        
-
-        // Thêm nút chuyển tiếp vào ứng dụng
         this.app.append(this.nextButton);
     }
 
     
-    // Các phương thức giao tiếp với controller - Méthodes de communication avec le contrôleur
     
+    /**
+     * event handler pour le form
+     * @param {Function} handler - envoie du formulaire
+     * @returns {void}
+     * 
+     */
     onSubmit(handler) {
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -59,6 +68,11 @@ export default class UserView {
         });
     }
     
+    /**
+     * Ajout de notre écouteur d'événement pour la liste des utilisateurs
+     * @param {Function} handler - EventHandler
+     * @returns {void}
+     */
     onUserClick(handler) {
         this.userList.addEventListener('click', (event) => {
             const clickedUserItem = event.target.closest('.user-item');
@@ -75,23 +89,13 @@ export default class UserView {
             }
         });
     }
-    // Các phương thức hiển thị - Méthodes d'affichage
-    
-    showCarteView() {
-        // Tạo và hiển thị trang view mới (CarteView)
-        const carteView = new CarteView();
-        carteView.show();
-      }
-      show() {
-        // Hiển thị trang view Carte
-        this.app.innerHTML = '';
-        this.app.append(this.title, this.checkboxForm, this.submitButton);
-      }
-    
-    showAlert(message) {
-        alert(message);
-    }
 
+      
+
+    /**
+     * Displays the list of users.
+     * @param {Array} users - The array of user objects to display.
+     */
     displayUsers(users) {
         this.userList.innerHTML = '';
         users.forEach(user => {
@@ -102,25 +106,15 @@ export default class UserView {
         });
     }
 
-    // Các phương thức tiện ích - Méthodes utilitaires
-    getSelectedUser() {
-        // Lấy phần tử người chơi được chọn (nếu có)
-        const selectedUserItem = this.userList.querySelector('.user-item.selected');
-        
-        // Kiểm tra xem có phần tử được chọn hay không
-        // Nếu có, trả về giá trị của thuộc tính 'data-name', tức là tên của người chơi
-        // Nếu không, trả về null
-        return selectedUserItem ? selectedUserItem.getAttribute('data-name') : null;
-    }
+    
     
 
-    toggleUserSelected(userName) {
-        const userItem = this.userList.querySelector(`.user-item[data-name="${userName}"]`);
-        if (userItem) {
-            userItem.classList.toggle('selected');
-        }
-    }
-
+    /**
+     * Fonction pour créer un élément HTML avec un tag et la classe en paramètre
+     * @param {string} tag - The HTML tag name of the element to create.
+     * @param {string} [className] - The optional class name to add to the element.
+     * @returns {HTMLElement} The created HTML element.
+     */
     createElement(tag, className) {
         const element = document.createElement(tag);
         if (className) {
@@ -132,17 +126,5 @@ export default class UserView {
     getElement(selector) {
         return document.querySelector(selector);
     }
-    // remove() {
-    //     if (this.title) {
-    //       this.title.remove();
-    //     }
-    
-    //     if (this.userList) {
-    //       this.userList.remove();
-    //     }
-    
-    //     if (this.deleteButton) {
-    //       this.deleteButton.remove();
-    //     }
-    //   }
+   
 }

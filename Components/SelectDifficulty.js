@@ -1,6 +1,6 @@
 /**
  * Crée un components formulaire pour sélectioner la difficulté.
- * 
+ * @file SelectDifficulty.js
  * @returns {HTMLElement} - Élément de formulaire HTML avec une liste déroulante de difficultés.
  * @author Quentin
  */

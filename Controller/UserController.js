@@ -1,37 +1,56 @@
-// user.controller.js
-// import UserModel from './Model/UserModel.js'
+/**
+ * @file UserController.js
+ * @description Controller des users, limitation de liste, add, suppression
+ * @module UserController
+ */
 
+/**
+ * @class UserController
+ * @classdesc Class qui va gérer les users.
+ */
 export default class UserController {
+    /**
+     * Créer une class UserController.
+     * @param {object} model - Le modèle
+     * @param {object} view - La vue
+     */
     constructor(model, view) {
         this.model = model;
         this.view = view;
 
-        // Kết nối sự kiện từ view với các phương thức xử lý trong controller - Connectez les événements de la vue aux méthodes du gestionnaire dans le contrôleur
+        // Vue
         this.view.onSubmit(this.addUser.bind(this));
         this.view.onUserClick(this.toggleSelected.bind(this));
         this.view.onDeleteClick(this.deleteUser.bind(this));
 
-        // Hiển thị danh sách người chơi ban đầu-Affiche la liste initiale des joueurs
+        // update
         this.updateUserList();
     }
 
-
+    /**
+     * Ajout d'un utilisateur
+     * @param {string} userName - Nom utilisateur
+     * @returns {void}
+     * 
+     */
     addUser(userName) {
         if (!userName) {
-            this.view.showAlert('veuillez saisir un joueur.');
+            this.view.showAlert('Veuillez saisir votre nom.');
             return;
         }
-        console.log('Ajout user:', userName);
+        //console.log('Adding user:', userName);
         const added = this.model.addUser(userName);
         if (!added) {
-            this.view.showAlert('Le joueur existe déjà. Veuillez saisir un autre nom.');
+            this.view.showAlert('Le pseudo a déjà été pris, veullez en prendre un autre svp');
         } else {
-            // Xóa nội dung trong ô input sau khi thêm tên -Supprimez le contenu de la zone de saisie après avoir ajouté le nom
             this.view.input.value = '';
         }
         this.updateUserList();
     }
 
+    /**
+     * Suppresion user ? à garder ?
+     */
     deleteUser() {
         const selectedUser = this.view.getSelectedUser();
         if (selectedUser) {
@@ -40,13 +59,17 @@ export default class UserController {
         }
     }
 
-    toggleSelected(userName) {
-        this.view.toggleUserSelected(userName);
-    }
 
+    /**
+     * Mis à jour de la liste des utilisateurs.
+     * @returns {void}
+     */
     updateUserList() {
         const users = this.model.getAllUsers();
         this.view.displayUsers(users);
     }
-    
 }
+        
+    
+
+    
