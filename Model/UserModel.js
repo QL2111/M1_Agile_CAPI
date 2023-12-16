@@ -1,24 +1,41 @@
 // user.model.js
+
+/**
+ * Mdodel user
+ */
 export default class UserModel {
     constructor() {
         this.users = [];
     }
 
+    /**
+     * Ajout utilisateur
+     * @param {string} userName - pseudo
+     * @returns {boolean} - retourne vrai si okay
+     */
     addUser(userName) {
         const existingUser = this.users.find(user => user.name === userName);
         if (existingUser) {
-            return false; // Người chơi đã tồn tại - Le joueur existe déjà
+            return false; 
         } else {
             const newUser = { name: userName };
             this.users.push(newUser);
-            return true; // Người chơi được thêm vào danh sách- Le joueur est ajouté à la liste
+            return true; 
         }
     }
 
+    /**
+     * Delete , à garder ?
+     * @param {string} userName - utilisateur à supprimer
+     */
     deleteUser(userName) {
         this.users = this.users.filter(user => user.name !== userName);
     }
 
+    /**
+     * getter de tout les utilisateurs
+     * @returns {Array} - retourne tout els utilisateurs
+     */
     getAllUsers() {
         return this.users;
     }
