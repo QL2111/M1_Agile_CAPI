@@ -25,6 +25,9 @@ export default class UserController {
         // update
         this.updateUserList();
     }
+    updateNbUsersMax(nbUsersMax) {
+        this.nbUsersMax = nbUsersMax;
+    }
 
     /**
      * Ajout d'un utilisateur
@@ -39,6 +42,10 @@ export default class UserController {
         }
         if (this.model.getAllUsers().length >= this.nbUsersMax) {
             alert('Nombre d\'utilisateurs maximum atteint.');
+            return;
+        }
+        if (this.model.getAllUsers().length >= this.maxUsers) {
+            this.view.showAlert(`Le nombre maximum d'utilisateurs (${this.maxUsers}) a été atteint.`);
             return;
         }
         //console.log('Adding user:', userName);
