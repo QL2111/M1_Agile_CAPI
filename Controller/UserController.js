@@ -13,18 +13,20 @@ export default class UserController {
      * Créer une class UserController.
      * @param {object} model - Le modèle
      * @param {object} view - La vue
+     * @param {number} nbUsersMax - Nombre d'utilisateurs maximum, par défaut 4
      */
-    constructor(model, view) {
+    constructor(model, view, nbUsersMax = 4) {
         this.model = model;
         this.view = view;
+        this.nbUsersMax = nbUsersMax;
 
         // Vue
         this.view.onSubmit(this.addUser.bind(this));
-        this.view.onUserClick(this.toggleSelected.bind(this));
-        this.view.onDeleteClick(this.deleteUser.bind(this));
-
         // update
         this.updateUserList();
+    }
+    updateNbUsersMax(nbUsersMax) {
+        this.nbUsersMax = nbUsersMax;
     }
 
     /**
@@ -35,13 +37,21 @@ export default class UserController {
      */
     addUser(userName) {
         if (!userName) {
-            this.view.showAlert('Veuillez saisir votre nom.');
+            alert('Veuillez saisir votre nom.');
+            return;
+        }
+        if (this.model.getAllUsers().length >= this.nbUsersMax) {
+            alert('Nombre d\'utilisateurs maximum atteint.');
+            return;
+        }
+        if (this.model.getAllUsers().length >= this.maxUsers) {
+            this.view.showAlert(`Le nombre maximum d'utilisateurs (${this.maxUsers}) a été atteint.`);
             return;
         }
         //console.log('Adding user:', userName);
         const added = this.model.addUser(userName);
         if (!added) {
-            this.view.showAlert('Le pseudo a déjà été pris, veullez en prendre un autre svp');
+            alert('Le pseudo a déjà été pris, veullez en prendre un autre svp');
         } else {
             this.view.input.value = '';
         }
