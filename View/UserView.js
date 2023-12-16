@@ -18,11 +18,22 @@ export default class UserView {
         this.title = this.createElement('h1');
         this.title.textContent = 'User Management';
 
+        // Formulaire choix du nb d'utilisateurs
+        this.formNbUser = this.createElement('form');
+        this.inputNbUser = this.createElement('input');
+        this.inputNbUser.type = 'number';
+        this.inputNbUser.placeholder = 'Entrez le nombre de joueurs';
+        this.inputNbUser.name = 'nbUser';
+        this.submitButtonNbUser = this.createElement('button');
+        this.submitButtonNbUser.textContent = 'Submit';
+        this.formNbUser.append(this.inputNbUser, this.submitButtonNbUser);
+        this.app.append(this.title, this.formNbUser);
+
         // Formulaires pour ajouter un utilisateur
         this.form = this.createElement('form');
         this.input = this.createElement('input');
         this.input.type = 'text';
-        this.input.placeholder = 'Enter player name';
+        this.input.placeholder = 'Entrez votre pseudo';
         this.input.name = 'user';
         // Bouton pour envoyer le formulaire(ajout)
         this.submitButton = this.createElement('button');
@@ -37,7 +48,7 @@ export default class UserView {
 
         // Ajout d'un bouton Supprimer pour supprimer le joueur sélectionné( à garder ?)
         this.deleteButton = this.createElement('button', 'delete');
-        this.deleteButton.textContent = 'Delete Selected';
+        this.deleteButton.textContent = 'Supprimer';
         this.app.append(this.deleteButton);
 
         // Button Next - passer à l'étape suivante
@@ -67,11 +78,30 @@ export default class UserView {
             handler();
         });
     }
-    
+
+    /**
+     * Écouteur d'événements pour le form choix du nombre d'utilisateurs
+     * @param {Function} handler - EventHandler
+     * @returns {void}
+     */
+    onNbUserFormSubmit(handler) {
+        this.formNbUser.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const nbUsers = parseInt(this.inputNbUser.value, 10);
+            // Vérification nb valide
+            if (!isNaN(nbUsers) && nbUsers > 0) {
+                handler(nbUsers);
+            } else {
+                alert('Veuillez saisir un nombre valide pour le nombre de joueurs.');
+            }
+        });
+    }
+
     /**
      * Ajout de notre écouteur d'événement pour la liste des utilisateurs
      * @param {Function} handler - EventHandler
      * @returns {void}
+     * @description - Lorsqu'on clique, on va ajouter une propriété css
      */
     onUserClick(handler) {
         this.userList.addEventListener('click', (event) => {
@@ -126,5 +156,6 @@ export default class UserView {
     getElement(selector) {
         return document.querySelector(selector);
     }
+    
    
 }
