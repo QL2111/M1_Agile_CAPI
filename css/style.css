@@ -127,35 +127,27 @@ label {
   text-transform: uppercase;
   font-weight:  bold;
 }
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 10px;
-  padding: 15px;
-  background-color: #fff;
-  display: inline-block;
-  width: calc(33.33% - 20px);
-  box-sizing: border-box;
+
+.cartes {
+  max-height: 75vh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
 }
 
-/* @media (max-width: 768px) {
-  .card {
-    width: 100%;
+@media (max-width: 768px) {
+  .cartes {
+    grid-template-columns: repeat(2, 1fr);
   }
-} */
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
 }
 
-/* .card {
-  margin: 10px;
-} */
+@media (max-width: 480px) {
+  .cartes {
+    grid-template-columns: 1fr;
+  }
+}
 
-img {
-  max-width: 100%; /* Đảm bảo ảnh không vượt quá kích thước của container */
+.cartes img {
+  width: 66%;
   height: auto;
 }
