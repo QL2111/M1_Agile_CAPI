@@ -56,12 +56,29 @@ if(window.location.pathname === '/cartes.html') {
     // On récupère dans le local storage et on envoie dans la vue
     globalNbUsersMax = localStorage.getItem('nbUsersMax');
     globalDifficulty = localStorage.getItem('difficulty');
-    const carteView = new CarteView(globalNbUsersMax, globalDifficulty);
+    const carteView = new CarteView();
+    // Pas besoin de model pour les cartes ? On a juste une valeur simple
     const carteModel = new CarteModel();
-    const carteController = new CarteController(carteModel, carteView);
-    document.getElementById('root').appendChild(carteView);
+    const carteController = new CarteController(carteModel, carteView, globalNbUsersMax, globalDifficulty);
 
 
     console.log('Difficulté cartes : ', globalDifficulty);
     console.log('Nombre utilisateur cartes : ', globalNbUsersMax);
+
+
+    // Ajoutez un gestionnaire pour les clics sur les cartes
+    carteView.addClickHandler((carteSrc) => {
+        let value = carteSrc.split('_')[1].split('.')[0];
+        console.log(value);
+        carteController.ajouterCarteSelectionnee(value);
+    });
+
+    // Ajoutez un gestionnaire pour le bouton voter
+    carteView.addClickHandlerVote(() => {
+        console.log('Vote');
+        carteController.vote();
+
+    });
+
+
 }

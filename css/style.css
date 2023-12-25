@@ -149,5 +149,17 @@ label {
 
 .cartes img {
   width: 66%;
+  margin-top: 5vh;
   height: auto;
+}
+
+.carte-zoom {
+  transform: scale(1.2); 
+  transition: transform 0.5s ease;
+  outline: 0;
+  border: 2px solid black;
+  border-radius: 25px;
+  background: lightblue;
+  border-style: solid;
+  border-width: 2px;
 }
