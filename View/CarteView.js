@@ -1,127 +1,53 @@
-// import SelectDifficulty from "../Components/SelectDifficulty";
-
-import SelectDifficulty from "../Components/SelectDifficulty.js";
-const CarteView = () => {
-  const title = document.createElement('h1');
-  title.textContent = "CARTE VIEW";
-  let selectedCard = null;
-
-  const cardContainer = document.createElement('div');
-  cardContainer.className = 'card-container';
-
-  const cardImageLinks = [
-    "cartes_0.svg",
-    "cartes_1.svg",
-    "cartes_2.svg",
-    "cartes_3.svg",
-    "cartes_5.svg",
-    "cartes_8.svg",
-    "cartes_13.svg",
-    "cartes_20.svg",
-    "cartes_40.svg",
-    "cartes_100.svg",
-    "cartes_cafe.svg",
-    "cartes_interro.svg"
-  ];
-
-  const cardPerRow = 3;
-
-  for (let i = 0; i < cardImageLinks.length; i++) {
-    const card = createCard(cardImageLinks[i]);
-    cardContainer.appendChild(card);
-
-    if ((i + 1) % cardPerRow === 0) {
-      cardContainer.appendChild(document.createElement('br'));
-    }
-  }
-
-  function createCard(link) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.setAttribute('data-link', link);
-
-    const img = document.createElement('img');
-    img.src = `/img/${link}`;
-
-    card.appendChild(img);
-    return card;
-  }
-  function handleCardClick(event) {
-    const clickedCard = event.currentTarget;
-    console.log ("clickedCard :" , clickedCard )
-  
-    if (clickedCard) {
-      console.log('Card ajoute:', clickedCard.getAttribute('data-link'));
-  
-      // Chuyển đổi lớp 'selected'
-      clickedCard.classList.add('selected');
-      console.log('Class clicked ajoute:', clickedCard);
-  
-      // Loại bỏ lớp 'selected' khỏi các thẻ khác
-      document.querySelectorAll('.card').forEach(card => {
-        if (card !== clickedCard) {
-          card.classList.remove('selected');
-        }
-      });
-  
-      selectedCard = clickedCard.getAttribute('data-link');
-    } else {
-      console.error('Aucun element card.');
-      selectedCard = null; // Đảm bảo rằng selectedCard là null nếu có lỗi
-    }
-  }
-  
+export default class CarteView {
   
 
-  cardContainer.addEventListener('click', (event) => {
-    console.log('Event Click active.');
+  constructor(globalDifficulty, globaNbUsers) {
+    this.globalDifficulty = globalDifficulty;
+    this.globaNbUsers = globaNbUsers;
+    this.cartesUrl = ["img/cartes_0.svg","img/cartes_1.svg","img/cartes_2.svg","img/cartes_3.svg",
+  "img/cartes_5.svg","img/cartes_8.svg","img/cartes_13.svg","img/cartes_20.svg",
+  "img/cartes_40.svg","img/cartes_100.svg","img/cartes_cafe.svg","img/cartes_interro.svg",];
     
-    const clickedCard = event.target.closest('.card');
+    this.app = this.getElement('#SectionCard');
+
     
-    if (clickedCard) {
-      const datalink = clickedCard.getAttribute('data-link');
-      
-      if (datalink) {
-        handleCardClick(datalink);
+    // Création de nos éléments
+    this.title = document.createElement('h1');
+    this.title.textContent = 'Carte View';
+    this.app.append(this.title);
+
+
+    // Affichage des cartes
+    this.cartes = document.createElement('div');
+    this.cartes.classList.add('cartes');
+    // Création dde chaque carte
+    this.cartesUrl.forEach(element => {
+      let carte = document.createElement('img');
+      carte.classList.add('carte');
+      carte.src = element;
+      this.cartes.append(carte);
+    });
+    this.app.append(this.cartes);
+
+
+  }
+  /**
+  * Fonction pour créer un élément HTML avec un tag et la classe en paramètre
+  * @param {string} tag - The HTML tag name of the element to create.
+  * @param {string} [className] - The optional class name to add to the element.
+  * @returns {HTMLElement} The created HTML element.
+  */
+  createElement(tag, className) {
+      const element = document.createElement(tag);
+      if (className) {
+          element.classList.add(className);
       }
-    }
-  });
+      return element;
+  }
   
 
-  cardContainer.addEventListener('mouseover', (event) => {
-    if (event.target.classList.contains('card',) && !event.target.classList.contains('selected')) {
-      event.target.classList.add('hovered');
-    }
-  });
-
-  cardContainer.addEventListener('mouseout', (event) => {
-    if (event.target.classList.contains('card') && !event.target.classList.contains('selected')) {
-      event.target.classList.remove('hovered');
-    }
-  });
-
-  const envoyerButton = document.createElement('button');
-  envoyerButton.textContent = 'Envoyer';
-
-  envoyerButton.addEventListener('click', () => {
-    if (selectedCard) {
-      console.log('Card ajoute:', selectedCard);
-      const view = View(selectedCard);
-      app.innerHTML = '';
-      app.appendChild(view);
-
-    } else {
-      console.log('aucun card ajoute.');
-    }
-  });
-
-  const formElement = document.createElement('form');
-  formElement.appendChild(title);
-  formElement.appendChild(cardContainer);
-  formElement.appendChild(envoyerButton);
-
-  return formElement;
-};
-
-export default CarteView;
-
+  getElement(selector) {
+    return document.querySelector(selector);
+  }
+  
+}

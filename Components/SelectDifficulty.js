@@ -2,30 +2,33 @@
  * Crée un components formulaire pour sélectioner la difficulté.
  * @file SelectDifficulty.js
  * @returns {HTMLElement} - Élément de formulaire HTML avec une liste déroulante de difficultés.
+ * @param {Function} updateDifficulty - Props pour mettre à jour la variable globale globalDifficulty défini dans app.js
  * @author Quentin
  */
-const SelectDifficulty = () => {
+const SelectDifficulty = (updateDifficulty) => {
     let selectedDifficulty = 'medium' //Moyenne par défaut
 
     /**
      * event handler
      *
      * @param {Event} e - Objet d'événement.
+     * @returns {void}
+     * 
     */
     const handleSelectChange = (e) => {
         selectedDifficulty = e.target.value;
-        console.log('Selected Difficulty:', selectedDifficulty);
-        // TODO- faire les différentes méthodes de voe selon la difficulté (props en natif ?)
+        //console.log('Selected Difficulty:', selectedDifficulty);
+        updateDifficulty(selectedDifficulty)
     };
 
         
     /**
      * Boutton pour changer la page, passer le paramètre en props
      * @param {string} difficulty - Difficulté choisi
+     * @returns {void}
      */
     const ChangerPage =(difficulter) => {
         console.log(difficulter)
-        //location.href= "cartes.html"
 
     }
 

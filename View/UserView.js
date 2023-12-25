@@ -1,5 +1,4 @@
 
-// user.view.js
 /**
  * @file UserView.js
  * @description Vue des utilisateur
@@ -16,7 +15,7 @@ export default class UserView {
 
         // Création de nos éléments
         this.title = this.createElement('h1');
-        this.title.textContent = 'User Management';
+        this.title.textContent = 'User View';
 
         // Formulaire choix du nb d'utilisateurs
         this.formNbUser = this.createElement('form');
@@ -25,7 +24,7 @@ export default class UserView {
         this.inputNbUser.placeholder = 'Entrez le nombre de joueurs';
         this.inputNbUser.name = 'nbUser';
         this.submitButtonNbUser = this.createElement('button');
-        this.submitButtonNbUser.textContent = 'Submit';
+        this.submitButtonNbUser.textContent = 'Envoyer';
         this.formNbUser.append(this.inputNbUser, this.submitButtonNbUser);
         this.app.append(this.title, this.formNbUser);
 
@@ -37,7 +36,7 @@ export default class UserView {
         this.input.name = 'user';
         // Bouton pour envoyer le formulaire(ajout)
         this.submitButton = this.createElement('button');
-        this.submitButton.textContent = 'Submit';
+        this.submitButton.textContent = 'Envoyer';
         
         // Liste
         this.userList = this.createElement('ul', 'user-list');
@@ -55,6 +54,9 @@ export default class UserView {
         this.nextButton = this.createElement('button');
         this.nextButton.type = 'button';
         this.nextButton.textContent = 'Next';
+        this.nextButton.addEventListener('click', () => {
+            window.location.href = 'cartes.html';
+        });
         this.app.append(this.nextButton);
     }
 
@@ -109,11 +111,8 @@ export default class UserView {
             if (clickedUserItem) {
                 handler(clickedUserItem.getAttribute('data-name'));
     
-                // Thêm class 'clicked' khi click vào 'li'
                 clickedUserItem.classList.add('clicked');
-                
-                // Lắng nghe sự kiện mouseout để xóa class 'clicked'
-                clickedUserItem.addEventListener('mouseout', () => {
+                                clickedUserItem.addEventListener('mouseout', () => {
                     clickedUserItem.classList.remove('clicked');
                 });
             }
