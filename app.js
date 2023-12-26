@@ -15,6 +15,7 @@ import CarteView from './View/CarteView.js';
 // Variables globales
 let globalDifficulty = 'medium'; //Mode par défaut
 let globalNbUsersMax = 0; //Nombre d'utilisateurs maximum
+let globalFonctionaliteCourante = 0; //Fonctionnalité courante
 
 // ########################################
 // ######### Gestion Menu ###########
@@ -77,8 +78,34 @@ if(window.location.pathname === '/cartes.html') {
     carteView.addClickHandlerVote(() => {
         console.log('Vote');
         carteController.vote();
-
+        
+        // Pour pouvoir revoter on enlève la classe zoom à tout ceux qui possèdent
+        const carteElements = document.getElementsByClassName('carte-zoom');
+        while (carteElements.length > 0) {
+            carteElements[0].classList.remove('carte-zoom');
+        }
     });
 
+    // JSON
+    fetch('fonctionnalites.json')
+    .then(function(response){
+    return response.json();
+    })
+    .then(function(fonctionnalites){
+    let placeholder = document.querySelector("#data-output");
+    let out = "";
+    for(let fonctionnalite of fonctionnalites){
+        out += `
+            <tr>
+                <td>${fonctionnalite.role}</td>
+                <td>${fonctionnalite.fonctionnalite}</td>
+                <td>${fonctionnalite.but}</td>
+            </tr>
+        `;
+    }
+    
+    placeholder.innerHTML = out;
+    console.log(fonctionnalites)
 
+    });
 }

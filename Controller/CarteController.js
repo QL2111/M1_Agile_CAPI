@@ -40,22 +40,27 @@ export default class CarteController{
 
     vote(){
         switch (this.globalDifficulty) {
+            // Premier tour forcément unamimite puis on peut faire médiane ou moyenne
             case 'strict':
-                for (let i = 0; i < this.cartesSelectionnees.length; i++) {
-                    if (this.cartesSelectionnees[0] != this.cartesSelectionnees[i]){
-                        alert("Tout le monde n'a pas choisi pareil, il faut revoter");
-                        break;
-                    }
-                }   
+                let firstValue = this.cartesSelectionnees[0];
+                let allEqual = this.cartesSelectionnees.every(carte => carte === firstValue);
+                if (!allEqual) {
+                    alert("Tout le monde n'a pas choisi pareil, il faut revoter");
+                    // On clear la liste
+                    this.cartesSelectionnees = [];
+                }else{
+                    alert("Tout le monde a choisi pareil, la difficulté estimé est : " + firstValue);
+                }
                 break;
-            case 'median':
+            case 'mediane':
                 break;
-            case 'medium':
+            case 'moyenne':
                 break;
             default:
-                alert("Problème, la difficulté n'a pas été choisi")
+                alert("Problème, la difficulté n'a pas été choisie");
                 break;
         }
+        this.cartesSelectionnees = [];
     }
 
 }

@@ -52,9 +52,10 @@ export default class CarteView {
       // passage de la vue à app.js
       if (event.target.classList.contains('carte')) {
         handler(event.target.src);
+        // On va agrandir l'image des cartes pour la lisiblité
+        event.target.classList.add('carte-zoom');
       }
-      // On va agrandir l'image des cartes pour la lisiblité
-      event.target.classList.add('carte-zoom');
+      
     });
   }
 
