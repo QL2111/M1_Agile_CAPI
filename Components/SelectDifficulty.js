@@ -42,7 +42,7 @@ const SelectDifficulty = (updateDifficulty) => {
     selectElement.addEventListener('change', handleSelectChange);
 
     const optionMedium = document.createElement('option');
-    optionMedium.value = 'medium';
+    optionMedium.value = 'moyenne';
     optionMedium.textContent = 'Moyen';
 
     const optionStrict = document.createElement('option');
@@ -50,7 +50,7 @@ const SelectDifficulty = (updateDifficulty) => {
     optionStrict.textContent = 'Strict';
 
     const optionMedian = document.createElement('option');
-    optionMedian.value = 'median';
+    optionMedian.value = 'mediane';
     optionMedian.textContent = 'Médiane';
 
     const buttonElement = document.createElement('button');

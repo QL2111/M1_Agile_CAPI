@@ -15,6 +15,7 @@ import CarteView from './View/CarteView.js';
 // Variables globales
 let globalDifficulty = 'medium'; //Mode par défaut
 let globalNbUsersMax = 0; //Nombre d'utilisateurs maximum
+let globalFonctionaliteCourante = 0; //Fonctionnalité courante
 
 // ########################################
 // ######### Gestion Menu ###########
@@ -56,12 +57,55 @@ if(window.location.pathname === '/cartes.html') {
     // On récupère dans le local storage et on envoie dans la vue
     globalNbUsersMax = localStorage.getItem('nbUsersMax');
     globalDifficulty = localStorage.getItem('difficulty');
-    const carteView = new CarteView(globalNbUsersMax, globalDifficulty);
+    const carteView = new CarteView();
+    // Pas besoin de model pour les cartes ? On a juste une valeur simple
     const carteModel = new CarteModel();
-    const carteController = new CarteController(carteModel, carteView);
-    document.getElementById('root').appendChild(carteView);
+    const carteController = new CarteController(carteModel, carteView, globalNbUsersMax, globalDifficulty);
 
 
     console.log('Difficulté cartes : ', globalDifficulty);
     console.log('Nombre utilisateur cartes : ', globalNbUsersMax);
+
+
+    // Ajoutez un gestionnaire pour les clics sur les cartes
+    carteView.addClickHandler((carteSrc) => {
+        let value = carteSrc.split('_')[1].split('.')[0];
+        console.log(value);
+        carteController.ajouterCarteSelectionnee(value);
+    });
+
+    // Ajoutez un gestionnaire pour le bouton voter
+    carteView.addClickHandlerVote(() => {
+        console.log('Vote');
+        carteController.vote();
+        
+        // Pour pouvoir revoter on enlève la classe zoom à tout ceux qui possèdent
+        const carteElements = document.getElementsByClassName('carte-zoom');
+        while (carteElements.length > 0) {
+            carteElements[0].classList.remove('carte-zoom');
+        }
+    });
+
+    // JSON
+    fetch('fonctionnalites.json')
+    .then(function(response){
+    return response.json();
+    })
+    .then(function(fonctionnalites){
+    let placeholder = document.querySelector("#data-output");
+    let out = "";
+    for(let fonctionnalite of fonctionnalites){
+        out += `
+            <tr>
+                <td>${fonctionnalite.role}</td>
+                <td>${fonctionnalite.fonctionnalite}</td>
+                <td>${fonctionnalite.but}</td>
+            </tr>
+        `;
+    }
+    
+    placeholder.innerHTML = out;
+    console.log(fonctionnalites)
+
+    });
 }
