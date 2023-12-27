@@ -29,11 +29,25 @@ if (localStorage.getItem('fonctionnaliteCourante') == null){
 let valeurFonctionnaliteVote = null; // null par défaut, on changera après le vote
 let fonctionnalitesJSON = null;
 localStorage.setItem('fonctionnaliteVote', valeurFonctionnaliteVote);
+
+
 // ########################################
 // ######### Gestion Menu ###########
 // ########################################
 
 if(window.location.pathname === '/') {
+    
+    // Choix de la difficulté
+
+    const updateGlobalDifficulty = (newDifficulty) => {
+        globalDifficulty = newDifficulty;
+        localStorage.setItem('difficulty', newDifficulty);
+        console.log('Difficulté globale : ', globalDifficulty);
+    };
+    const selectDifficulty = SelectDifficulty(updateGlobalDifficulty)
+
+    document.getElementById('root').appendChild(selectDifficulty);
+
     const userView = new UserView();
     const userModel = new UserModel();
     const userController = new UserController(userModel, userView);
@@ -44,17 +58,9 @@ if(window.location.pathname === '/') {
         localStorage.setItem('nbUsersMax', nbUsers);
         // Mis à jour du nombre d'utilisateurs maximum
         userController.updateNbUsersMax(nbUsers);
+        alert("Vous avez choisi le nombre d'utilisateurs : " + nbUsers);
     });
 
-    // Choix de la difficulté
-
-    const updateGlobalDifficulty = (newDifficulty) => {
-        globalDifficulty = newDifficulty;
-        localStorage.setItem('difficulty', newDifficulty);
-        console.log('Difficulté globale : ', globalDifficulty);
-    };
-    const selectDifficulty = SelectDifficulty(updateGlobalDifficulty)
-    document.getElementById('root').appendChild(selectDifficulty);
 
 }
 
@@ -112,7 +118,7 @@ if(window.location.pathname === '/cartes.html') {
     // Ajoutez un gestionnaire pour les clics sur les cartes
     carteView.addClickHandler((carteSrc) => {
         let value = carteSrc.split('_')[1].split('.')[0];
-        console.log(value);
+        // console.log(value);
         carteController.ajouterCarteSelectionnee(value);
     });
 

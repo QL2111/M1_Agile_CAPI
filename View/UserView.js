@@ -24,7 +24,7 @@ export default class UserView {
         this.inputNbUser.placeholder = 'Entrez le nombre de joueurs';
         this.inputNbUser.name = 'nbUser';
         this.submitButtonNbUser = this.createElement('button');
-        this.submitButtonNbUser.textContent = 'Envoyer';
+        this.submitButtonNbUser.textContent = 'Confirmer le nombre de joueurs';
         this.formNbUser.append(this.inputNbUser, this.submitButtonNbUser);
         this.app.append(this.title, this.formNbUser);
 
@@ -34,31 +34,24 @@ export default class UserView {
         this.input.type = 'text';
         this.input.placeholder = 'Entrez votre pseudo';
         this.input.name = 'user';
-        // Bouton pour envoyer le formulaire(ajout)
-        this.submitButton = this.createElement('button');
-        this.submitButton.textContent = 'Envoyer';
         
         // Liste
         this.userList = this.createElement('ul', 'user-list');
 
         // Ajout de nos élement
-        this.form.append(this.input, this.submitButton);
+        this.form.append(this.input);
         this.app.append(this.title, this.form, this.userList);
-
-        // Ajout d'un bouton Supprimer pour supprimer le joueur sélectionné( à garder ?)
-        this.deleteButton = this.createElement('button', 'delete');
-        this.deleteButton.textContent = 'Supprimer';
-        this.app.append(this.deleteButton);
 
         // Button Next - passer à l'étape suivante
         this.nextButton = this.createElement('button');
         this.nextButton.type = 'button';
-        this.nextButton.textContent = 'Next';
+        this.nextButton.textContent = 'Passer à l\'étape suivante';
         this.nextButton.addEventListener('click', () => {
             window.location.href = 'cartes.html';
         });
         this.app.append(this.nextButton);
     }
+    
 
     
     
