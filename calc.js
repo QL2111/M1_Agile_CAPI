@@ -6,6 +6,11 @@ export function add(a,b){
     return a+b;
 }
 
+/**
+ * 
+ * @param {list} cartesSelectionnees Tableau des valeurs des cartes sélectionnées par les joueurs
+ * @returns {integer} - Retourne la valeur de la médiane
+ */
 export function mediane(cartesSelectionnees) {
     // Tri de la liste en ordre croissant
     cartesSelectionnees.sort((a, b) => a - b); 
@@ -21,6 +26,11 @@ export function mediane(cartesSelectionnees) {
     }
 }
 
+/**
+ * 
+ * @param {list} cartesSelectionnees Tableau des valeurs des cartes sélectionnées par les joueurs
+ * @returns {integer} - Retourne la valeur de la moyenne
+ */
 export function moyenne(cartesSelectionnees) {
     if (cartesSelectionnees.length === 0) {
         return 0;
