@@ -2,12 +2,12 @@
 /**
  * @file UserView.js
  * @description Vue des utilisateur
- * @module UserView
  */
 
 /**
  * @class UserView
  * @classdesc UserView création des éléments html
+ * @description - Bouton pour passer à l'étape suivante
  */
 export default class UserView {
     constructor() {
@@ -68,11 +68,6 @@ export default class UserView {
         });
     }
     
-    onDeleteClick(handler) { 
-        this.deleteButton.addEventListener('click', () => {
-            handler();
-        });
-    }
 
     /**
      * Écouteur d'événements pour le form choix du nombre d'utilisateurs
