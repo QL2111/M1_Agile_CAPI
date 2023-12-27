@@ -14,3 +14,4 @@ References
 REQUIRE
     node.js
     fs(File System)
+    jest, babel, babel-jest, ts-jest.
