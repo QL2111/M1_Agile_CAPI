@@ -1,6 +1,14 @@
 import CarteController from '../Controller/CarteController.js';
 import CarteModel from '../Model/CarteModel.js';
 
+/**
+ * @file CarteView.js
+ * @description Vue des cartes
+ *            - Va afficher chaque carte contenu dans le tableau cartesUrl contenant les chemins
+ *            - Va gérer les événements sur les cartes
+ *            - Va créer le bouton voter
+ * @class CarteView
+ */
 export default class CarteView {
   
 

@@ -1,3 +1,17 @@
+/**
+ * Fichier principal de l'application
+ * @file app.js
+ * @description - Gestion du menu
+ *              - Gestion des cartes
+ *              - Gestion des utilisateurs
+ *              - Gestion des fonctionnalités
+ *              - Gestion des difficultés
+ *              - Gestion des votes
+ *              - Gestion des variables globales(localStorage), difficulté, nombre d'utilisateurs, fonctionnalité courante, fonctionnalité vote
+ *              - Lecture du json et affichage du backlog
+ *              - Routage avec window.location.pathname
+ * 
+ */
 
 import UserModel from './Model/UserModel.js'
 import UserView from './View/UserView.js'
@@ -6,17 +20,6 @@ import SelectDifficulty from './Components/SelectDifficulty.js';
 import CarteModel from './Model/CarteModel.js';
 import CarteController from './Controller/CarteController.js';
 import CarteView from './View/CarteView.js';
-
-
-// TO-DO système de vote(avec les tests), pouvoir sauvegarder avec la carte café 
-// Faire la doc pour les cartes(mercredi matin)
-// Faire le test pour le calcul de la moyenne/médiane
-// Faire strict et médiane, revoir le formulaire menu(on change) -> un seul submit
-// Variable globale, changer la police en rouge pour la fonctionnalité courante
-// -> design pattern singleton + factory pour les cartes
-// Bonus, Faire un timer 
-// Enregistrement JSON ne marche pas
-
 
 
 // Variables globales

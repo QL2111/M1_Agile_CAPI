@@ -3,7 +3,6 @@
  * @file SelectDifficulty.js
  * @returns {HTMLElement} - Élément de formulaire HTML avec une liste déroulante de difficultés.
  * @param {Function} updateDifficulty - Props pour mettre à jour la variable globale globalDifficulty défini dans app.js
- * @author Quentin
  */
 const SelectDifficulty = (updateDifficulty) => {
     let selectedDifficulty = 'strict' //strict par défaut
