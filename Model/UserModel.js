@@ -1,7 +1,10 @@
 // user.model.js
 
 /**
- * Mdodel user
+ * Model user
+ * @file UserModel.js
+ * @class UserModel
+ * @Prototype
  */
 export default class UserModel {
     constructor() {
@@ -38,5 +41,15 @@ export default class UserModel {
      */
     getAllUsers() {
         return this.users;
+    }
+
+    /**
+     * Clone la classe UserModel
+     * @returns {UserModel} - une copie de la classe UserModel
+     */
+    clone() {
+        const clonedUserModel = new UserModel();
+        clonedUserModel.users = [...this.users];
+        return clonedUserModel;
     }
 }

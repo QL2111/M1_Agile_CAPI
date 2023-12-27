@@ -4,7 +4,9 @@
  * @file CarteModel.js
  * @description Modèle des cartes
  * @module CarteModel
+ * @Prototype
  */
+
 export default class CarteModel {
     /**
      * @param {integer} valeur - Valeur de la carte
@@ -27,5 +29,13 @@ export default class CarteModel {
      */
     setCarte(valeur) {
         this.carte = valeur;
+    }
+
+    /**
+     * Crée une copie de l'objet CarteModel
+     * @returns {CarteModel} - Copie de l'objet CarteModel
+     */
+    clone() {
+        return new CarteModel(this.carte);
     }
 }
