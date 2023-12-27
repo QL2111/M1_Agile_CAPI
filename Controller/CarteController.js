@@ -22,10 +22,25 @@ import {mediane, moyenne} from '../calc.js';
  * @param {number} globalNbUsersMax - Nombre d'utilisateurs maximum, par défaut 4
  * @param {string} globalDifficulty - Difficulté, par défaut strict
  * @param {number} cptTentativesVote - Nombre de tentatives de vote, par défaut 0
+ * @Singleton - On utilise le pattern singleton pour n'avoir qu'une seule instance de CarteController
  * @returns {void}
  * 
  */
+
 export default class CarteController{
+
+    static instance;
+
+    /**
+     * Méthode statique pour obtenir l'instance unique de CarteController
+     * @returns {CarteController} - L'instance unique de CarteController
+     */
+    static getInstance() {
+        if (!CarteController.instance) {
+            CarteController.instance = new CarteController();
+        }
+        return CarteController.instance;
+    }
     /**
      * Créer une class CarteController.
      * @param {object} CarteModel - Le modèle
@@ -36,6 +51,10 @@ export default class CarteController{
      *
      */
     constructor(CarteModel, CarteView, globalNbUsersMax, globalDifficulty){
+        if (CarteController.instance) {
+            throw new Error("Une instance de CarteController existe déjà. Utilisez CarteController.getInstance() pour l'obtenir.");
+        }
+        CarteController.instance = this;
         this.model = CarteModel;
         this.view = CarteView;
         this.cartesSelectionnees = [];

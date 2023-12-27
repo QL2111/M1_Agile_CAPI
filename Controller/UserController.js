@@ -8,8 +8,24 @@
 /**
  * @class UserController
  * @classdesc Class qui va gérer les users.
+ * @Singleton - On utilise le pattern singleton pour n'avoir qu'une seule instance de UserController
  */
+
 export default class UserController {
+
+    static instance;
+
+    /**
+     * Méthode statique pour obtenir l'instance unique de UserController
+     * @returns {UserController} - L'instance unique de UserController
+     */
+    static getInstance() {
+        if (!UserController.instance) {
+            UserController.instance = new UserController();
+        }
+        return UserController.instance;
+    }
+
     /**
      * Créer une class UserController.
      * @param {object} model - Le modèle
@@ -17,6 +33,9 @@ export default class UserController {
      * @param {number} nbUsersMax - Nombre d'utilisateurs maximum, par défaut 4
      */
     constructor(model, view, nbUsersMax = 4) {
+        if (UserController.instance) {
+            throw new Error("Une instance de UserController existe déjà. Utilisez UserController.getInstance() pour l'obtenir.");
+        }
         this.model = model;
         this.view = view;
         this.nbUsersMax = nbUsersMax;
