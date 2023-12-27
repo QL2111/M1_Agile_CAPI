@@ -21,4 +21,4 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Run tests
-      run: sudo npm run test
+      run: ./node_modules/.bin/jest
