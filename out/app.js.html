@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Fichier principal de l'application
+ * @file app.js
+ * @description - Gestion du menu
+ *              - Gestion des cartes
+ *              - Gestion des utilisateurs
+ *              - Gestion des fonctionnalités
+ *              - Gestion des difficultés
+ *              - Gestion des votes
+ *              - Gestion des variables globales(localStorage), difficulté, nombre d'utilisateurs, fonctionnalité courante, fonctionnalité vote
+ *              - Lecture du json et affichage du backlog
+ *              - Routage avec window.location.pathname
+ * 
+ */
+
+import UserModel from './Model/UserModel.js'
+import UserView from './View/UserView.js'
+import UserController from './Controller/UserController.js'
+import SelectDifficulty from './Components/SelectDifficulty.js';
+import CarteModel from './Model/CarteModel.js';
+import CarteController from './Controller/CarteController.js';
+import CarteView from './View/CarteView.js';
+
+
+// Variables globales
+let globalDifficulty = 'medium'; //Mode par défaut
+let globalNbUsersMax = 0; //Nombre d'utilisateurs maximum
+if (localStorage.getItem('fonctionnaliteCourante') == null){
+    let globalFonctionnaliteCourante = 0; //Fonctionnalité courante
+    localStorage.setItem('fonctionnaliteCourante', globalFonctionnaliteCourante);
+}
+let valeurFonctionnaliteVote = null; // null par défaut, on changera après le vote
+let fonctionnalitesJSON = null;
+localStorage.setItem('fonctionnaliteVote', valeurFonctionnaliteVote);
+
+
+// ########################################
+// ######### Gestion Menu ###########
+// ########################################
+
+if(window.location.pathname === '/') {
+    
+    // Choix de la difficulté
+
+    const updateGlobalDifficulty = (newDifficulty) => {
+        globalDifficulty = newDifficulty;
+        localStorage.setItem('difficulty', newDifficulty);
+        console.log('Difficulté globale : ', globalDifficulty);
+    };
+    const selectDifficulty = SelectDifficulty(updateGlobalDifficulty)
+
+    document.getElementById('root').appendChild(selectDifficulty);
+
+    const userView = new UserView();
+    const userModel = new UserModel();
+    const userController = new UserController(userModel, userView);
+    // Ajoutez un gestionnaire pour le formulaire de choix du nombre d'utilisateurs
+    userView.onNbUserFormSubmit((nbUsers) => {
+        console.log('Nombre d\'utilisateurs choisi par l\'utilisateur:', nbUsers);
+        globalNbUsersMax = nbUsers;
+        localStorage.setItem('nbUsersMax', nbUsers);
+        // Mis à jour du nombre d'utilisateurs maximum
+        userController.updateNbUsersMax(nbUsers);
+        alert("Vous avez choisi le nombre d'utilisateurs : " + nbUsers);
+    });
+
+
+}
+
+
+
+// ########################################
+// ######### Gestion des cartes ###########
+// ########################################
+
+
+if(window.location.pathname === '/cartes.html') {
+    // On récupère dans le local storage et on envoie dans la vue
+    globalNbUsersMax = localStorage.getItem('nbUsersMax');
+    globalDifficulty = localStorage.getItem('difficulty');
+    const carteView = new CarteView();
+    // Pas besoin de model pour les cartes ? On a juste une valeur simple
+    const carteModel = new CarteModel();
+    const carteController = new CarteController(carteModel, carteView, globalNbUsersMax, globalDifficulty);
+
+
+    console.log('Difficulté cartes : ', globalDifficulty);
+    console.log('Nombre utilisateur cartes : ', globalNbUsersMax);
+
+    // JSON
+    fetch('fonctionnalites.json')
+    .then(function(response){
+    return response.json();
+    })
+    .then(function(fonctionnalites){
+        fonctionnalitesJSON = fonctionnalites;
+        let placeholder = document.querySelector("#data-output");
+        let out = "";
+        for(let i = 0; i &lt; fonctionnalites.length; i++){
+            let fonctionnalite = fonctionnalites[i];
+            out += `
+                &lt;tr id="${i}">
+                    &lt;td>${fonctionnalite.role}&lt;/td>
+                    &lt;td>${fonctionnalite.fonctionnalite}&lt;/td>
+                    &lt;td>${fonctionnalite.but}&lt;/td>
+                    &lt;td id="difficulte-${i}">${fonctionnalite.difficulteEstimee}&lt;/td>
+                &lt;/tr>
+            `;
+        }
+        
+        placeholder.innerHTML = out;
+        // console.log(fonctionnalites);
+        let fonctionnaliteActive = document.getElementById(localStorage.getItem('fonctionnaliteCourante'));
+        console.log(fonctionnaliteActive);
+        fonctionnaliteActive.classList.add('fonctionnalite-active');
+
+        
+    });
+
+
+    // Ajoutez un gestionnaire pour les clics sur les cartes
+    carteView.addClickHandler((carteSrc) => {
+        let value = carteSrc.split('_')[1].split('.')[0];
+        // console.log(value);
+        carteController.ajouterCarteSelectionnee(value);
+    });
+
+    // Ajoutez un gestionnaire pour le bouton voter
+    carteView.addClickHandlerVote(() => {
+        carteController.vote();
+
+        // On met à jour la difficulté de la fonctionnalité courante(par défaut ça sera null donc on ne mettra pas à jour à part si le vote à bien été passer)
+        valeurFonctionnaliteVote = localStorage.getItem('fonctionnaliteVote');
+        console.log('Fonctionnalité courante : ', fonctionnalitesJSON[localStorage.getItem('fonctionnaliteCourante')]);
+        // On applique la modification dans le tableau
+        fonctionnalitesJSON[localStorage.getItem('fonctionnaliteCourante')].difficulteEstimee = valeurFonctionnaliteVote;
+        // On va écrire dans le json
+        let data = JSON.stringify(fonctionnalitesJSON, null, 2);
+        console.log('data',data);
+        // fs.writeFile('fonctionnalites.json', data, finished);
+
+        // On remet la valeurFonctionnaliteVote à null pour le prochain vote
+        localStorage.setItem('fonctionnaliteVote', null);
+
+
+        
+        // Pour pouvoir revoter on enlève la classe zoom à tout ceux qui possèdent
+        const carteElements = document.getElementsByClassName('carte-zoom');
+        while (carteElements.length > 0) {
+            carteElements[0].classList.remove('carte-zoom');
+        }
+    });
+
+    
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CarteView.html">CarteView</a></li><li><a href="UserView.html">UserView</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addClickHandler">addClickHandler</a></li><li><a href="global.html#addClickHandlerVote">addClickHandlerVote</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#createElement">createElement</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#displayUsers">displayUsers</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#onNbUserFormSubmit">onNbUserFormSubmit</a></li><li><a href="global.html#onSubmit">onSubmit</a></li><li><a href="global.html#onUserClick">onUserClick</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Dec 27 2023 18:04:41 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
