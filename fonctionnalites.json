@@ -2,26 +2,31 @@
     {
         "role" : "Utilisateur",
         "fonctionnalite" : "Voir les identités des collaborateurs sur une page d’acceuil",
-        "but" : "Connaître les effectifs de la société"
+        "but" : "Connaître les effectifs de la société",
+        "difficulteEstimee": null
     },
     {
         "role" : "Administrateur",
         "fonctionnalite" : "Avoir une interface pour pouvoir créer un nouveau profil",
-        "but" : "Mettre à jour le trombinoscope"
+        "but" : "Mettre à jour le trombinoscope",
+        "difficulteEstimee": null
     },
     {
         "role" : "Administrateur",
         "fonctionnalite" : "Pouvoir insérer une photo de la personne dans son profil",
-        "but" : "Le rendre reconnaissable de tous"
+        "but" : "Le rendre reconnaissable de tous",
+        "difficulteEstimee": null
     },
     {
         "role" : "Administrateur",
         "fonctionnalite" : "Pouvoir modifier un profil existant",
-        "but" : "Mettre à jour le trombinoscope"
+        "but" : "Mettre à jour le trombinoscope",
+        "difficulteEstimee": null
     },
     {
         "role" : "Utilisateur",
         "fonctionnalite" : "Pouvoir consulter le profil détaillé d’une identité sélectionnée",
-        "but" : "Pouvoir contacter ou reconnaître une personne"
+        "but" : "Pouvoir contacter ou reconnaître une personne",
+        "difficulteEstimee": null
     }
 ]

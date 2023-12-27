@@ -13,11 +13,6 @@ export default class CarteView {
 
     
     // Création de nos éléments
-    this.title = document.createElement('h1');
-    this.title.textContent = 'Carte View';
-    this.app.append(this.title);
-
-
     // Affichage des cartes
     this.cartes = document.createElement('div');
     this.cartes.classList.add('cartes');
