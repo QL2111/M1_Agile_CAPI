@@ -24,6 +24,7 @@ import {mediane, moyenne} from '../calc.js';
  * @param {number} cptTentativesVote - Nombre de tentatives de vote, par défaut 0
  * @Singleton - On utilise le pattern singleton pour n'avoir qu'une seule instance de CarteController
  * @returns {void}
+ * @private
  * 
  */
 
@@ -54,7 +55,6 @@ export default class CarteController{
         if (CarteController.instance) {
             throw new Error("Une instance de CarteController existe déjà. Utilisez CarteController.getInstance() pour l'obtenir.");
         }
-        CarteController.instance = this;
         this.model = CarteModel;
         this.view = CarteView;
         this.cartesSelectionnees = [];

@@ -9,6 +9,7 @@
  * @class UserController
  * @classdesc Class qui va gérer les users.
  * @Singleton - On utilise le pattern singleton pour n'avoir qu'une seule instance de UserController
+ * @private
  */
 
 export default class UserController {
