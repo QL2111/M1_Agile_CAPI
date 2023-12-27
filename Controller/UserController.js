@@ -19,9 +19,9 @@ export default class UserController {
      * Méthode statique pour obtenir l'instance unique de UserController
      * @returns {UserController} - L'instance unique de UserController
      */
-    static getInstance() {
+    static getInstance(userModel, userView) {
         if (!UserController.instance) {
-            UserController.instance = new UserController();
+            UserController.instance = new UserController(userModel, userView);
         }
         return UserController.instance;
     }
@@ -31,11 +31,13 @@ export default class UserController {
      * @param {object} model - Le modèle
      * @param {object} view - La vue
      * @param {number} nbUsersMax - Nombre d'utilisateurs maximum, par défaut 4
+     * @private 
      */
     constructor(model, view, nbUsersMax = 4) {
         if (UserController.instance) {
             throw new Error("Une instance de UserController existe déjà. Utilisez UserController.getInstance() pour l'obtenir.");
         }
+        
         this.model = model;
         this.view = view;
         this.nbUsersMax = nbUsersMax;

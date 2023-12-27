@@ -35,9 +35,9 @@ export default class CarteController{
      * Méthode statique pour obtenir l'instance unique de CarteController
      * @returns {CarteController} - L'instance unique de CarteController
      */
-    static getInstance() {
+    static getInstance(carteModel, carteView, globalNbUsersMax, globalDifficulty) {
         if (!CarteController.instance) {
-            CarteController.instance = new CarteController();
+            CarteController.instance = new CarteController(carteModel, carteView, globalNbUsersMax, globalDifficulty);
         }
         return CarteController.instance;
     }
@@ -48,7 +48,7 @@ export default class CarteController{
      * @param {number} globalNbUsersMax - Nombre d'utilisateurs maximum, par défaut 4
      * @param {string} globalDifficulty - Difficulté, par défaut strict
      * @param {number} cptTentativesVote - Nombre de tentatives de vote, par défaut 0
-     *
+     * @private
      */
     constructor(CarteModel, CarteView, globalNbUsersMax, globalDifficulty){
         if (CarteController.instance) {

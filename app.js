@@ -53,7 +53,8 @@ if(window.location.pathname === '/') {
 
     const userView = new UserView();
     const userModel = new UserModel();
-    const userController = new UserController(userModel, userView);
+    
+    const userController = UserController.getInstance(userModel, userView);
     // Ajoutez un gestionnaire pour le formulaire de choix du nombre d'utilisateurs
     userView.onNbUserFormSubmit((nbUsers) => {
         console.log('Nombre d\'utilisateurs choisi par l\'utilisateur:', nbUsers);
@@ -81,7 +82,7 @@ if(window.location.pathname === '/cartes.html') {
     const carteView = new CarteView();
     // Pas besoin de model pour les cartes ? On a juste une valeur simple
     const carteModel = new CarteModel();
-    const carteController = new CarteController(carteModel, carteView, globalNbUsersMax, globalDifficulty);
+    const carteController = CarteController.getInstance(carteModel, carteView, globalNbUsersMax, globalDifficulty);
 
 
     console.log('Difficulté cartes : ', globalDifficulty);
