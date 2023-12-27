@@ -6,7 +6,7 @@
  * @author Quentin
  */
 const SelectDifficulty = (updateDifficulty) => {
-    let selectedDifficulty = 'medium' //Moyenne par défaut
+    let selectedDifficulty = 'strict' //strict par défaut
 
     /**
      * event handler
@@ -18,45 +18,30 @@ const SelectDifficulty = (updateDifficulty) => {
     const handleSelectChange = (e) => {
         selectedDifficulty = e.target.value;
         //console.log('Selected Difficulty:', selectedDifficulty);
-        updateDifficulty(selectedDifficulty)
-    };
+        updateDifficulty(selectedDifficulty);
+        alert("Vous avez choisi la difficulté : " + selectedDifficulty);
+    };        
 
-        
-    /**
-     * Boutton pour changer la page, passer le paramètre en props
-     * @param {string} difficulty - Difficulté choisi
-     * @returns {void}
-     */
-    const ChangerPage =(difficulter) => {
-        console.log(difficulter)
-
-    }
-
-    const formElement = document.createElement('form');
-    const labelElement = document.createElement('label');
+    let formElement = document.createElement('form');
+    let labelElement = document.createElement('label');
     labelElement.setAttribute('for', 'difficulty');
-    labelElement.textContent = 'Difficulty:';
+    labelElement.textContent = 'Choissisez la difficulté (strict par défaut):';
 
-    const selectElement = document.createElement('select');
+    let selectElement = document.createElement('select');
     selectElement.id = 'difficulty';
     selectElement.addEventListener('change', handleSelectChange);
 
-    const optionMedium = document.createElement('option');
+    let optionMedium = document.createElement('option');
     optionMedium.value = 'moyenne';
-    optionMedium.textContent = 'Moyen';
+    optionMedium.textContent = 'Moyenne';
 
-    const optionStrict = document.createElement('option');
+    let optionStrict = document.createElement('option');
     optionStrict.value = 'strict';
     optionStrict.textContent = 'Strict';
 
-    const optionMedian = document.createElement('option');
+    let optionMedian = document.createElement('option');
     optionMedian.value = 'mediane';
     optionMedian.textContent = 'Médiane';
-
-    const buttonElement = document.createElement('button');
-    buttonElement.textContent = 'Valider';
-    buttonElement.addEventListener('onclick', ChangerPage(selectedDifficulty))
-
 
 
     // Ajout des sélections de difficultés
@@ -64,10 +49,10 @@ const SelectDifficulty = (updateDifficulty) => {
     selectElement.appendChild(optionStrict);
     selectElement.appendChild(optionMedian);
 
+
     // Ajout du label, select et button dans le formulaire
     formElement.appendChild(labelElement);
     formElement.appendChild(selectElement);
-    formElement.appendChild(buttonElement)
 
     return formElement;
 };
