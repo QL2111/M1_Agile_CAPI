@@ -7,9 +7,9 @@ Le maître du jeu sélectionne les cartes que chaque joueur choisi et peut proc�
 
 REQUIRE
     run npm install
-    node.js
-    fs(File System)
-    jest, babel, babel-jest, ts-jest.
+    npm install --save-dev jest
+    npm install --save-dev @babel/core
+    npm run test
 
 Contributors 
     LE VAN Duy
